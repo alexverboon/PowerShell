@@ -50,8 +50,16 @@ function Find-MrModuleUpdate {
         [string]$Scope
     )
 
-    $AllUsersPath = "$env:ProgramFiles\WindowsPowerShell\Modules\*"
-    $CurrentUserPath = "$env:USERPROFILE\Documents\WindowsPowerShell\Modules\*"
+    if ($PSVersionTable.PSVersion.Major -eq 7)
+    {
+        Write-Host "it's 7"
+        $AllUsersPath = "$PSHome\Modules\*"
+        $CurrentUserPath = "$env:USERPROFILE\Documents\PowerShell\Modules\*"
+    }
+    else {
+        $AllUsersPath = "$env:ProgramFiles\WindowsPowerShell\Modules\*"
+        $CurrentUserPath = "$env:USERPROFILE\Documents\WindowsPowerShell\Modules\*"
+    }
 
     switch ($Scope) {
         'AllUsers' {$Path = $AllUsersPath; break}
